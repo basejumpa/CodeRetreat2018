@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if [ "$OS" != "Windows_NT" ] ; then
+   echo "ERROR: Wrapper works on windows only. Sorry."
+   exit 1
+fi
+
+HTTP_PROXY=${HTTP_PROXY:-http://Debugger:debu02@cias3basic.conti.de:8080}
+HTTPS_PROXY=${HTTPS_PROXY:-$HTTP_PROXY}
+
+function prerequisite {
+   if [ ! -f $2 ] ; then
+      echo "Installing $1 ..."
+      echo $3
+      "$3"
+      if [ $? -ne 0 ] ; then
+         echo " FAILED."
+         exit 1
+      fi
+   fi
+}
+
+WRAPPER__WRAPPED_EXECUTABLE=groovy
+WRAPPER__INDICATOR_INSTALLED="$USERPROFILE\scoop\shims\groovy"
+WRAPPER__INSTALL_COMMANDLINE="./scoopw install groovy@2.5.2"
+prerequisite "$WRAPPER__WRAPPED_EXECUTABLE" "$WRAPPER__INDICATOR_INSTALLED" "$WRAPPER__INSTALL_COMMANDLINE"
+
+"$WRAPPER__WRAPPED_EXECUTABLE" "$@"

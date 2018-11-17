@@ -1,0 +1,127 @@
+= Hello Groovy
+Getting started with Groovy in our corporate environment.
+:numbered:
+:toc:
+
+== What this repo does for you
+
+This contains solutions for
+
+* Correct proxy settings,
+* Streamlined installation with wrapper technique,
+* Painless installation of *java*, *groovy*, *IDEA*, w/o local admin using *scoop*,
+* Small footprint package managing with *Grape*,
+* Unit testing with *Spock*,
+* Handling Excel with *POI*.
+
+== Steps
+
+=== Clone repository
+Open *Tools/Git-Shell* from within your http://github.conti.de/automotiveSoftwareFactory/SmartGit/wiki[SmartGit] and then issue the following commands:
+....
+$ cd .. #<1>
+$ git clone git@github.conti.de:mann/helloGroovy.git #<2>
+$ cd helloGroovy #<3>
+.... 
+<1> Change current working directory (cwd) to be outside of a git repository.
+<2> Clone this repository
+<3> Move cwd to local repository's root.
+
+
+Below the examples are explained.
+
+=== Try example: Hello World
+
+.... 
+$ ./groovyw helloGroovy #<1>
+Hello World!
+....
+<1> Run the script
+
+.Further reading
+* https://learnxinyminutes.com/docs/groovy/[Learn Groovy in Y minutes]
+* http://www.groovy-lang.org/documentation.html[Groovy documentation]
+
+=== Try examples: Testing
+
+There are some examples how to test:
+
+* `helloAssert.groovy`: Simple usage of language built in assertion
+* `FizzBuzzSpec.groovy` tests function implemented in `FizzBuzz.groovy` using Spock test framework. HTML report is generated in folder `spock-reports/index.html`. 
+
+
+.... 
+$ ./groovyw helloAssert #<1>
+$ ./setProxies #<2>
+$ ./groovyw FizzBuzzSpec #<3>
+....
+<1> Run first script
+<2> Set proxies to be used by Grape package manager
+<3> Run second script
+
+.Further reading
+* http://docs.groovy-lang.org/next/html/documentation/core-testing-guide.html[Groovy Testing Guide]
+* https://moduslaborandi.net/post/groovy-101-grape-and-tests-with-spock/[Grape and spock and Travis.ci]
+* http://spockframework.org/spock/docs/1.2/index.html[Spock Testing Framework]
+* https://github.com/yamila-moreno/groovyFizzBuzz[FizzBuzz kata]
+* https://mvnrepository.com/artifact/com.athaydes/spock-reports/1.2.10[Spock reports]
+
+=== Try example: Handling Excel
+
+.... 
+$ ./setProxies #<1>
+$ ./groovyw helloExcel #<2>
+someExcelFile.xlsx:A1=A1
+.... 
+<1> Set the proxies to access repository in internet from within corporate intranet. Necessary because `helloExcel.groovy` depends on Apache POI libraries.
+<2> Run the script.
+
+.Further reading
+* https://poi.apache.org/apidocs/index.html[POI Javadocs]
+* https://dzone.com/articles/introduction-to-apache-poi-library[POI Introduction of DZone]
+* https://www.callicoder.com/java-read-excel-file-apache-poi/[Howto read excel files]
+
+
+== Trouble Shooting
+
+=== No java?
+
+Groovy depends on java. Because java should be already installed on a corporate machine, I don't have created any wrapper for that. In case above `./groovyw` commands fail because of missing java, install java as shown below:
+
+....
+$ ./scoopw bucket add java #<1>
+$ ./scoopw install oraclejdk-lts #<2>
+....
+<1> Register the repository of the java applications
+<2> Install the long-term-support version of the Java Development Kit
+
+
+=== No IDE ?
+
+==== IntelliJ IDEA 
+
+My recommendation is to use JetBrains' https://www.jetbrains.com/idea/[IntelliJ IDEA] for hacking java. Use scoop to install it:
+
+....
+$ ./scoopw bucket add extras #<1>
+$ ./scoopw install idea #<2>
+$ idea64 #<3>
+....
+<1> Register the repository of the extra applications
+<2> Install IntelliJ IDEA
+<3> From now on you can start it via this command
+
+.Further reading
+* https://www.jetbrains.com/help/idea/running-and-debugging-groovy-scripts.html[Running and debugging groovy in IDEA]
+
+==== Visual Studio Code
+Microsoft's https://code.visualstudio.com/[Visual Studio Code] is my favorite editor/IDE for many things. Use scoop to install it:
+
+....
+$ ./scoopw bucket add extras #<1>
+$ ./scoopw install vscode #<2>
+$ vscode #<3>
+....
+<1> Register the repository of the extra applications
+<2> Install Visual Studio code
+<3> From now on you can start it via this command
