@@ -6,7 +6,9 @@ public class Cell {
         return new Integer(neighborCount)
     }
 
-    void setNeighborCount(Integer n){
-        this.neighborCount = n
+    void setNeighborCount(Integer neighborCount){
+        this.neighborCount = neighborCount
     }
+
+
 }
